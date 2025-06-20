@@ -1,0 +1,9 @@
+flasgger
+sqlalchemy
+databases[postgresql]          
+alembic
+python-multipart
+python-dotenv
+peewee
+psycopg2-binary
+flask

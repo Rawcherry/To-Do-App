@@ -1,0 +1,33 @@
+
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: tododb
+      POSTGRES_USER: todo
+      POSTGRES_PASSWORD: todo
+    ports:
+      - "15432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  app:
+    build: .
+    depends_on:
+      - db
+    command: ["/wait-for-it.sh", "db:5432", "--", "python", "app.py"]
+    ports:
+      - "5000:1488"  # На локальной машине будет порт 5000, внутри контейнера — 1488 (как в app.py)
+    environment:
+      DB_HOST: db         # Внутреннее имя сервиса Postgres
+      DB_PORT: 5432
+      DB_NAME: tododb
+      DB_USER: todo
+      DB_PASSWORD: todo
+      COUNTDOWN_TO_WHORES_ARRIVE: 3 hours
+    volumes:
+      - .:/app
+    
+
+volumes:
+  pgdata:
