@@ -64,7 +64,7 @@ POST /tasks
 Content-Type: application/json
 
 {
-  "text": "Купить хлеб"
+  "text": "шакила мне в онила"
 }
 
 ---///Получить задачу по ID///---
@@ -77,7 +77,7 @@ PATCH /tasks/<id>
 Content-Type: application/json
 
 {
-  "text": "Купить молоко",
+  "text": "булата мне в окуджаву",
   "done": true
 }
 
