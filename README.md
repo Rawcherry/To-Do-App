@@ -13,15 +13,17 @@ Flask-приложение для ведения списка задач (ToDo),
 - Полная сборка и запуск через Docker Compose
 
 ---
-Быстрый старт
+Установка
+
 1. Клонируй репозиторий
 
-git clone <ваш-репозиторий>
-cd <ваша-папка>
+git clone https://github.com/Rawcherry/To-Do-App
+
+cd To-Do-App/
 
 2. Запусти приложение через Docker Compose
 
-docker-compose up --build
+docker-compose up --build   (если не запуститься, попробуй от sudo)
 
 
 Это поднимет две службы:
@@ -29,7 +31,6 @@ docker-compose up --build
 - app — Flask-приложение (порт 5000 на локальной машине, внутри контейнера работает на 1488)
 3. Swagger-документация
 
-- Открой: [http://localhost:5000/apidocs/](http://localhost:5000/apidocs/)  
 - Все эндпоинты можно исследовать и тестировать напрямую из интерфейса.
 
 ---
@@ -51,11 +52,12 @@ docker-compose up --build
 
 ---
 Примеры запросов
-Получить все задачи
+
+---///Получить все задачи///---
 
 GET /tasks
 
-Добавить задачу
+---///Добавить задачу///---
 
 POST /tasks
 Content-Type: application/json
@@ -64,11 +66,11 @@ Content-Type: application/json
   "text": "Купить хлеб"
 }
 
-Получить задачу по ID
+---///Получить задачу по ID///---
 
 GET /tasks/<id>
 
-Обновить задачу
+---///Обновить задачу///---
 
 PATCH /tasks/<id>
 Content-Type: application/json
@@ -78,7 +80,7 @@ Content-Type: application/json
   "done": true
 }
 
-Удалить задачу
+---///Удалить задачу///---
 
 DELETE /tasks/<id>
 
@@ -91,8 +93,7 @@ DELETE /tasks/<id>
 - Dockerfile — сборка приложения
 - docker-compose.yaml — многоконтейнерный запуск
 - wait-for-it.sh — скрипт ожидания запуска базы
-- и др.
-
+- 
 ---
 Остановка и очистка
 
@@ -118,7 +119,6 @@ docker-compose down -v
 Особенности
 
 - Таблица задач создаётся при первом запуске автоматически.
-- Для локального теста API используй [http://localhost:5000](http://localhost:5000).
 - Код автоматически мигрирует и подключается к сервису базы через внутреннюю docker-сеть.
 
 ---
