@@ -2,80 +2,77 @@
 
 # Todo API
 
-Flask-приложение для ведения простого списка задач (ToDo), с документацией через Swagger и хранением данных в PostgreSQL (через Peewee ORM).
+Flask-приложение для ведения списка задач (ToDo), с документацией через Swagger и хранением данных в PostgreSQL (через Peewee ORM).
 
 ---
 Возможности
 
-- Получение списка задач
-- Добавление задачи
-- Получение задачи по ID
-- Обновление задачи (текст и статус)
-- Удаление задачи
-- Swagger UI с автогенерируемой документацией по эндпоинтам
+- Получение, добавление, обновление и удаление задач
+- Swagger UI с автогенерируемой документацией
+- Данные хранятся в PostgreSQL
+- Полная сборка и запуск через Docker Compose
+
+---
+Быстрый старт
+1. Клонируй репозиторий
+
+git clone <ваш-репозиторий>
+cd <ваша-папка>
+
+2. Запусти приложение через Docker Compose
+
+docker-compose up --build
+
+
+Это поднимет две службы:
+- db — PostgreSQL (порт 15432 для доступа с хоста)
+- app — Flask-приложение (порт 5000 на локальной машине, внутри контейнера работает на 1488)
+3. Swagger-документация
+
+- Открой: [http://localhost:5000/apidocs/](http://localhost:5000/apidocs/)  
+- Все эндпоинты можно исследовать и тестировать напрямую из интерфейса.
 
 ---
 Переменные окружения
 
-Перед запуском необходимо указать настройки подключения к БД через переменные окружения:
+В docker-compose.yaml переменные заданы по умолчанию, но ты можешь их изменить под себя.
 
-- `DB_NAME` — имя базы данных
-- `DB_USER` — пользователь Postgres
-- `DB_PASSWORD` — пароль пользователя
-- `DB_HOST` — адрес сервера БД
-- `DB_PORT` — порт сервера БД (по умолчанию 5432)
+Для приложения:
+- `DB_HOST=db`
+- `DB_PORT=5432`
+- `DB_NAME=tododb`
+- `DB_USER=todo`
+- `DB_PASSWORD=todo`
 
-Пример (Linux/Mac):
-export DB_NAME="todos"
-export DB_USER="postgres"
-export DB_PASSWORD="your_password"
-export DB_HOST="localhost"
-export DB_PORT="5432"
-
-
----
-Запуск
-
-1. Установи зависимости:
-
-pip install flask peewee flasgger psycopg2-binary
-
-
-2. Запусти приложение:
-
-python app.py
-
-
-После запуска API будет доступно на `http://localhost:1488`.
-
----
-Документация
-
-Открой Swagger-документацию по адресу:
-
-http://localhost:1488/apidocs/
-
+Для базы данных:
+- `POSTGRES_DB=tododb`
+- `POSTGRES_USER=todo`
+- `POSTGRES_PASSWORD=todo`
 
 ---
 Примеры запросов
 Получить все задачи
 
-`GET /tasks`
+GET /tasks
+
 Добавить задачу
 
-`POST /tasks`  
-Тело запроса (JSON):
+POST /tasks
+Content-Type: application/json
+
 {
   "text": "Купить хлеб"
 }
 
 Получить задачу по ID
 
-`GET /tasks/<id>`
+GET /tasks/<id>
+
 Обновить задачу
 
-`PATCH /tasks/<id>`  
-Тело запроса (JSON):
+PATCH /tasks/<id>
+Content-Type: application/json
+
 {
   "text": "Купить молоко",
   "done": true
@@ -83,26 +80,45 @@ http://localhost:1488/apidocs/
 
 Удалить задачу
 
-`DELETE /tasks/<id>`
+DELETE /tasks/<id>
+
+
+---
+Состав репозитория
+
+- app.py — основной код приложения
+- requirements.txt — Python-зависимости
+- Dockerfile — сборка приложения
+- docker-compose.yaml — многоконтейнерный запуск
+- wait-for-it.sh — скрипт ожидания запуска базы
+- и др.
+
+---
+Остановка и очистка
+
+Остановить сервис:
+docker-compose down
+
+
+Если нужно удалить контейнеры и volume:
+docker-compose down -v
+
 
 ---
 Технологии
 
-- Python 3.7+
+- Python 3.11+
 - Flask 2+
 - Peewee ORM
 - Flasgger (Swagger UI)
-- PostgreSQL
+- PostgreSQL 15
+- Docker, Docker Compose
 
 ---
-Лицензия
+Особенности
 
-MIT (или укажи свою).
-
----
-Заметки
-
-- Приложение создает таблицу для задач автоматически при первом запуске.
-- Остальные детали и примеры смотри в Swagger-документации.
+- Таблица задач создаётся при первом запуске автоматически.
+- Для локального теста API используй [http://localhost:5000](http://localhost:5000).
+- Код автоматически мигрирует и подключается к сервису базы через внутреннюю docker-сеть.
 
 ---
