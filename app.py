@@ -84,7 +84,7 @@ def index():
     """
     return f"все нормально все запустилось :)"
 
-@app.route('/tasks', methods=['GET'])
+@app.route('/api/tasks', methods=['GET'])
 def get_todos():
     """
     Получить список задач
@@ -114,7 +114,7 @@ def get_todos():
     tasks = [{"id": task.id, "text": task.text, "done": task.done} for task in Task.select()]
     return json_response(tasks)
 
-@app.route('/tasks', methods=['POST'])
+@app.route('/api/tasks', methods=['POST'])
 def add_todo():
     """
     Добавить задачу
@@ -167,8 +167,8 @@ def add_todo():
     task = Task.create(text=data["text"])
     return json_response({"id": task.id, "text": task.text, "done": task.done}, status=201)
 
-@app.route('/tasks/<int:task_id>', methods=['DELETE'])
-def delete_todo(task_id):
+@app.route('/api/tasks/<int:id>', methods=['DELETE'])
+def delete_todo(id):
     """
     Удалить задачу
     ---
@@ -194,13 +194,13 @@ def delete_todo(task_id):
           application/json:
             error: Task not found
     """
-    deleted = Task.delete_by_id(task_id)
+    deleted = Task.delete_by_id(id)
     if not deleted:
         return json_response({"error": "Task not found"}, status=404)
     return '', 204
 
-@app.route('/tasks/<int:task_id>', methods=['PATCH'])
-def update_task(task_id):
+@app.route('/api/tasks/<int:id>', methods=['PATCH'])
+def update_task(id):
     """
     Обновить задачу
     ---
@@ -265,7 +265,7 @@ def update_task(task_id):
     if not data:
         return json_response({"error": "Нужно передать данные"}, status=400)
     try:
-        task = Task.get_by_id(task_id)
+        task = Task.get_by_id(id)
     except Task.DoesNotExist:
         return json_response({"error": "Task not found"}, status=404)
     update_data = {}
@@ -275,13 +275,13 @@ def update_task(task_id):
         update_data['done'] = data["done"]
     if not update_data:
         return json_response({"error": "Нет полей для обновления (text/done)"}, status=400)
-    Task.update(**update_data).where(Task.id == task_id).execute()
+    Task.update(**update_data).where(Task.id == id).execute()
     # Получаем обновленную задачу
-    task = Task.get_by_id(task_id)
+    task = Task.get_by_id(id)
     return json_response({"id": task.id, "text": task.text, "done": task.done})
 
-@app.route('/tasks/<int:task_id>', methods=['GET'])
-def get_task(task_id):
+@app.route('/api/tasks/<int:id>', methods=['GET'])
+def get_task(id):
     """
     Получить задачу по id
     ---
@@ -322,7 +322,7 @@ def get_task(task_id):
             error: Task not found
     """
     try:
-        task = Task.get_by_id(task_id)
+        task = Task.get_by_id(id)
     except Task.DoesNotExist:
         return json_response({"error": "Task not found"}, status=404)
     return json_response({
@@ -330,4 +330,4 @@ def get_task(task_id):
     })
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=1488)
+    app.run(host='0.0.0.0', port=5000)

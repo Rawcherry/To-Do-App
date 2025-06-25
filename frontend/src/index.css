@@ -1,0 +1,189 @@
+/* Общий фон страницы — светлый цвет отличный от вашего основного применения */
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Arial', sans-serif;
+  background-image: url('./background.jpg'); /* Обратите внимание на leading slash */
+  background-size: cover; /* Чтобы изображение растянулось полностью */
+  background-position: center; /* Центровка изображения */
+  background-repeat: no-repeat; /* Без повторения */
+}
+
+
+/* Общий контейнер приложения — большая аккуратная картонка */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 1600px;
+  padding: 40px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  background-color: #ffffff; /* основной фон приложения */
+  border-radius: 16px;
+}
+
+/* Заголовок приложения */
+h1 {
+  font-family: 'Cursive', cursive;
+  font-size: 3em;
+  color: #ff6347;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+/* Стили для блока TasksList (обертка) */
+.tasks-wrapper {
+  width: 100%;
+  max-width: 700px;
+}
+
+/* Заголовка раздела, если есть */
+h2 {
+  font-family: 'Arial', sans-serif;
+  font-size: 2em;
+  margin-bottom: 25px;
+  color: #333;
+  text-align: center;
+}
+
+/* Поле ввода новой задачи */
+input[type="text"] {
+  width: calc(100% - 130px);
+  padding: 12px 20px;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  font-size: 1em;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input[type="text"]:focus {
+  border-color: #ff6347;
+  box-shadow: 0 0 8px rgba(255, 99, 71, 0.3);
+  outline: none;
+}
+
+/* Кнопка "Добавить" */
+button {
+  padding: 24px 25px;
+  margin-left: 15px;
+  background-color: #ff6347;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+button:hover {
+  background-color: #ff3b2e;
+  transform: scale(1.05);
+}
+
+/* Список задач */
+ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 35px;
+}
+
+/* Элемент задачи */
+li {
+  display: flex;
+  align-items: center;
+  padding: 15px 20px;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  margin-bottom: 20px; /* больше отступа между задачами */
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+/* при наведении — чуть ярче */
+li:hover {
+  background-color: #f1f1f1;
+  transform: translateY(-2px);
+}
+
+/* чекбокс */
+li input[type="checkbox"] {
+  transform: scale(1.4);
+  margin-right: 20px;
+  cursor: pointer;
+}
+
+/* Текст задачи */
+li input[type="text"] {
+  flex-grow: 1;
+  font-size: 1.1em;
+  padding: 10px 15px;
+  border: none;
+  background: transparent;
+  outline: none;
+  transition: text-decoration 0.2s, font-weight 0.2s;
+}
+
+/* для выполненных задач — зачеркиваем и меняем цвет */
+.task-done {
+  text-decoration: line-through;
+  color: #999;
+  font-style: italic;
+}
+
+/* Кнопка удаления внутри задачи — например, крестик */
+li button.delete-btn {
+  background: none;
+  border: none;
+  color: #cc3333;
+  font-size: 1.4em;
+  margin-left: 15px;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+li button.delete-btn:hover {
+  color: #a00;
+}
+
+
+/* Обертка для поля и кнопки — делаем их горизонтальными */
+.new-task-controls {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 25px; /* отступ снизу */
+}
+
+/* Поле для текста задачи — занимает всё пространство, кроме кнопки */
+.new-task-controls input[type="text"] {
+  flex: 1;
+  padding: 12px 20px;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  font-size: 1em;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+/* Кнопка — фиксированная ширина, справа */
+.new-task-controls button {
+  flex-shrink: 0;
+  margin-left: 15px;
+  padding: 14px 25px;
+  background-color: #ff6347;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.new-task-controls button:hover {
+  background-color: #ff3b2e;
+  transform: scale(1.05);
+}
