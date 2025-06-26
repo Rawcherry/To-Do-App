@@ -92,8 +92,8 @@ function TasksList() {
     }
   };
 
-  if (loading) return <div>Загрузка...</div>;
-  if (error) return <div>Ошибка: {error}</div>;
+  if (loading) return <div>loading...</div>;
+  if (error) return <div>error: {error}</div>;
 
   return (
     <div>  
@@ -108,7 +108,7 @@ function TasksList() {
       >
         <input
           type="text"
-          placeholder="Введите новую задачу..."
+          placeholder="enter your new task..."
           value={newTaskText}
           onChange={(e) => setNewTaskText(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && handleAddTask()}
@@ -135,7 +135,7 @@ function TasksList() {
           onMouseOver={(e) => (e.target.style.backgroundColor = '#ff3b2e')}
           onMouseOut={(e) => (e.target.style.backgroundColor = '#ff6347')}
         >
-          Добавить
+          add task
         </button>
       </div>
 
@@ -176,7 +176,7 @@ function TasksList() {
               onMouseOver={(e) => (e.target.style.backgroundColor = '#d32f2f')}
               onMouseOut={(e) => (e.target.style.backgroundColor = '#f44336')}
             >
-              Удалить
+              delete 
             </button>
           </li>
         ))}
