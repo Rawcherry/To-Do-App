@@ -1,6 +1,4 @@
 ---
-[![Watch the video](https://raw.githubusercontent.com/Rawcherry/To-Do-App/branch/testing.png)](https://raw.githubusercontent.com/Rawcherry/To-Do-App/branch/testing.mp4)
-
 
 To-Do List App 
 
