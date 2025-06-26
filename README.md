@@ -1,8 +1,8 @@
 ---
 
-# Todo API
+To-Do List App 
 
-Flask-приложение для ведения списка задач (ToDo), с документацией через Swagger и хранением данных в PostgreSQL (через Peewee ORM).
+Flask-app to write down your tasks.
 
 ---
 Возможности
@@ -13,112 +13,101 @@ Flask-приложение для ведения списка задач (ToDo),
 - Полная сборка и запуск через Docker Compose
 
 ---
-Быстрый старт
-1. Клонируй репозиторий
+FS - Fast Start
+1. Clone repo
 
-git clone <ваш-репозиторий>
-cd <ваша-папка>
+git clone https://github.com/Rawcherry/To-Do-App
+cd To-Do-App\
 
-2. Запусти приложение через Docker Compose
+2. Launch app using next command
 
 docker-compose up --build
 
-
-Это поднимет две службы:
-- db — PostgreSQL (порт 15432 для доступа с хоста)
-- app — Flask-приложение (порт 5000 на локальной машине, внутри контейнера работает на 1488)
-3. Swagger-документация
-
-- Открой: [http://localhost:5000/apidocs/](http://localhost:5000/apidocs/)  
-- Все эндпоинты можно исследовать и тестировать напрямую из интерфейса.
-
 ---
-Переменные окружения
+Environment variables
 
-В docker-compose.yaml переменные заданы по умолчанию, но ты можешь их изменить под себя.
+It`s default variables in docker-compose.yaml. You can change them to fit your needs a guess idk.
 
-Для приложения:
+For APP:
 - `DB_HOST=db`
 - `DB_PORT=5432`
 - `DB_NAME=tododb`
 - `DB_USER=todo`
 - `DB_PASSWORD=todo`
 
-Для базы данных:
+For DB:
 - `POSTGRES_DB=tododb`
 - `POSTGRES_USER=todo`
 - `POSTGRES_PASSWORD=todo`
 
 ---
-Примеры запросов
-Получить все задачи
+Requests examples:
+
+Get a list of tasks
 
 GET /tasks
+curl -X GET "http://localhost:5000/api/tasks" -H "accept: application/json" 
+                                                                           #it will show you 
 
-Добавить задачу
+Post a task
 
 POST /tasks
-Content-Type: application/json
+curl -X POST "http://localhost:5000/api/tasks" -H "accept: application/json" -H "Content-Type: application/json" -d "{ \"text\": \"string\"}"                            #change string line
 
-{
-  "text": "Купить хлеб"
-}
 
-Получить задачу по ID
-
-GET /tasks/<id>
-
-Обновить задачу
+Patch task 
 
 PATCH /tasks/<id>
-Content-Type: application/json
+curl -X PATCH "http://localhost:5000/api/tasks/{id}" -H "accept: application/json" -H "Content-Type: application/json" -d "{ \"done\": true, \"text\": \"string\"}"           #change id of the task and it`s states
 
-{
-  "text": "Купить молоко",
-  "done": true
-}
 
-Удалить задачу
+Deleting task
 
 DELETE /tasks/<id>
+curl -X DELETE "http://localhost:5000/api/tasks/{id}" -H "accept: application/json"
 
 
 ---
-Состав репозитория
+Repo consists of:
 
-- app.py — основной код приложения
-- requirements.txt — Python-зависимости
-- Dockerfile — сборка приложения
-- docker-compose.yaml — многоконтейнерный запуск
-- wait-for-it.sh — скрипт ожидания запуска базы
-- и др.
+- app.py — main code of the app
+- requirements.txt — python requirements so your app works
+- Dockerfile — container to start main file
+- docker-compose.yaml — to start several containers at once
+- wait-for-it.sh — help-script that helps with DB initialization
+- frontend/ - frontend part of the app
+
 
 ---
-Остановка и очистка
+Stopping container
 
-Остановить сервис:
+Stopping service:
 docker-compose down
 
 
-Если нужно удалить контейнеры и volume:
+Deleting containers:
 docker-compose down -v
 
 
 ---
-Технологии
+Technologies I used to create this ThInG
 
-- Python 3.11+
-- Flask 2+
+- Python 
+- Flask 
 - Peewee ORM
 - Flasgger (Swagger UI)
 - PostgreSQL 15
 - Docker, Docker Compose
+- React and JS on frontend
+
 
 ---
-Особенности
+Features
 
-- Таблица задач создаётся при первом запуске автоматически.
-- Для локального теста API используй [http://localhost:5000](http://localhost:5000).
-- Код автоматически мигрирует и подключается к сервису базы через внутреннюю docker-сеть.
+- DB creates ONE time at building stage
+- For local API test use  (http://localhost:5000) - API part
+- For frontend use (http://localhost:3000)
+- Code automatically connects to it`s docker network.
+
 
 ---
