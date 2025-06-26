@@ -3,7 +3,7 @@
 To-Do List App 
 
 Flask-app to write down your tasks.
-
+(see testing.mp4 and testing.png to see app itself)
 ---
 With this app you can:
 
