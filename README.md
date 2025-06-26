@@ -22,7 +22,7 @@ FS - Fast Start
 git clone https://github.com/Rawcherry/To-Do-App
 ```
 ```
-cd To-Do-App\
+cd To-Do-App/
 ```
 
 2. Launch app using next command
