@@ -5,24 +5,28 @@ To-Do List App
 Flask-app to write down your tasks.
 
 ---
-Возможности
+With this app you can:
 
-- Получение, добавление, обновление и удаление задач
-- Swagger UI с автогенерируемой документацией
-- Данные хранятся в PostgreSQL
-- Полная сборка и запуск через Docker Compose
+- Getting, adding, updating, and deleting tasks
+- Swagger UI with auto-generated documentation
+- Data is stored in PostgreSQL
+- Full build and launch via Docker Compose
 
 ---
 FS - Fast Start
 1. Clone repo
 
+```
 git clone https://github.com/Rawcherry/To-Do-App
+```
+```
 cd To-Do-App\
+```
 
 2. Launch app using next command
-
+```
 docker-compose up --build
-
+```
 ---
 Environment variables
 
@@ -82,12 +86,14 @@ Repo consists of:
 Stopping container
 
 Stopping service:
+```
 docker-compose down
-
+```
 
 Deleting containers:
+```
 docker-compose down -v
-
+```
 
 ---
 Technologies I used to create this ThInG
@@ -106,7 +112,7 @@ Features
 
 - DB creates ONE time at building stage
 - For local API test use  (http://localhost:5000) - API part
-- For frontend use (http://localhost:3000)
+- For frontend use (http://localhost:3000) - Frontend part
 - Code automatically connects to it`s docker network.
 
 
