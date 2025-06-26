@@ -27,6 +27,8 @@ cd To-Do-App\
 ```
 docker-compose up --build
 ```
+P.S: other time start it with just using ``` docker compose up ```
+P.S.S: if it`s not working just use ``` sudo ``` before composing
 ---
 Environment variables
 
