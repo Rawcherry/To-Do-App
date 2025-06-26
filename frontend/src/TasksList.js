@@ -8,7 +8,7 @@ function TasksList() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Загружаем список задач при монтировании компонента
+  // loading list of task while mounting 
   useEffect(() => {
     fetchTasks();
   }, []);
@@ -18,7 +18,7 @@ function TasksList() {
     try {
       const response = await fetch(API_BASE_URL);
       if (!response.ok) {
-        throw new Error('Ошибка при загрузке задач');
+        throw new Error('error while loading task');
       }
       const data = await response.json();
       setTasks(data);
@@ -37,7 +37,7 @@ function TasksList() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ text: newTaskText }),
       });
-      if (!response.ok) throw new Error('Ошибка при добавлении задачи');
+      if (!response.ok) throw new Error('error while adding task');
       const newTask = await response.json();
       setTasks([...tasks, newTask]);
       setNewTaskText('');
@@ -54,7 +54,7 @@ function TasksList() {
       if (response.status === 204) {
         setTasks(tasks.filter((task) => task.id !== id));
       } else {
-        throw new Error('Задача не удалена');
+        throw new Error('task was not deleted');
       }
     } catch (err) {
       alert(err.message);
@@ -69,7 +69,7 @@ function TasksList() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ done: updatedDoneStatus }),
       });
-      if (!response.ok) throw new Error('Ошибка при обновлении задачи');
+      if (!response.ok) throw new Error('error while loading task list');
       const updatedTask = await response.json();
       setTasks(tasks.map((t) => (t.id === task.id ? updatedTask : t)));
     } catch (err) {
@@ -84,7 +84,7 @@ function TasksList() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ text: newText }),
       });
-      if (!response.ok) throw new Error('Ошибка при обновлении задачи');
+      if (!response.ok) throw new Error('error while patching tasks');
       const updatedTask = await response.json();
       setTasks(tasks.map((t) => (t.id === task.id ? updatedTask : t)));
     } catch (err) {
@@ -97,7 +97,7 @@ function TasksList() {
 
   return (
     <div>  
-      {/* Блок для добавления новой задачи */}
+      {/* central block  */}
       <div
         style={{
           display: 'flex',
@@ -139,7 +139,7 @@ function TasksList() {
         </button>
       </div>
 
-      {/* список задач */}
+      {/* list of tasks*/}
       <ul>
         {tasks.map((task) => (
           <li key={task.id} style={{ marginBottom: '10px' }}>
