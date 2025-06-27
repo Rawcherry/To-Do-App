@@ -116,7 +116,8 @@ Features
 
 - DB creates ONE time at building stage
 - For local API test use  (http://localhost:5000) - API part
-- For frontend use (http://localhost:3000) - Frontend part
+- For frontend use (http://localhost:3000) - Frontend part (React)
+- For frontend use (http://localhost:3001) - nginx part
 - Code automatically connects to it`s docker network.
 
 
@@ -124,8 +125,8 @@ Features
 Creating migrations
 ```
 docker-compose run --rm app python migrate_create.py
-```.
-```.
+```
+
 Applying migrations
 ```
 docker-compose run --rm app python migrate_apply.py
