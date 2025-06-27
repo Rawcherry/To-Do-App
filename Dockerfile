@@ -9,6 +9,8 @@ COPY . .
 COPY wait-for-it.sh /wait-for-it.sh
 RUN chmod +x /wait-for-it.sh
 
+COPY migrate_create.py migrate_apply.py /app/
+
 
 CMD ["python", "app.py"]
 

@@ -40,6 +40,14 @@ services:
     environment:
       REACT_APP_API_URL: http://app:5000/api 
     
+  frontend_nginx:
+    build:
+      context: ./frontend_nginx
+    ports:
+      - "3001:80"
+    depends_on:
+      - app
+
 
 volumes:
   pgdata:

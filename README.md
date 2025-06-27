@@ -121,3 +121,12 @@ Features
 
 
 ---
+Creating migrations
+```
+docker-compose run --rm app python migrate_create.py
+```.
+Applying migrations
+```
+docker-compose run --rm app python migrate_apply.py
+```
+---

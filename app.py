@@ -2,9 +2,10 @@ import os
 import time
 from flask import Flask, request, Response
 from flasgger import Swagger
-from peewee import Model, CharField, BooleanField
+from peewee import Model, CharField, BooleanField 
 from playhouse.pool import PooledPostgresqlDatabase
 from peewee import OperationalError
+from peewee_migrate import Router
 
 
 
@@ -40,7 +41,6 @@ swagger = Swagger(app)
 
 
 
-
 class BaseModel(Model):
     class Meta:
         database = db
@@ -62,6 +62,7 @@ def json_response(data, status=200):
         status=status,
         content_type='application/json; charset=utf-8'
     )
+
 
 
 

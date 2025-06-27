@@ -7,3 +7,4 @@ python-dotenv
 peewee
 psycopg2-binary
 flask
+peewee-migrate
