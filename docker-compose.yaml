@@ -44,7 +44,7 @@ services:
     build:
       context: ./frontend_nginx
     ports:
-      - "3001:3001"
+      - "3001:80"
     depends_on:
       - app
 
