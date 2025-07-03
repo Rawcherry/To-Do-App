@@ -23,22 +23,30 @@ Some examples (model - class or model name)::
     > migrator.drop_constraints(model, *constraints)
 
 """
-
 from contextlib import suppress
-
+from peewee import Model, CharField, BooleanField
 import peewee as pw
 from peewee_migrate import Migrator
 
+import sys
+sys.path.insert(0, '.')
+
+import app
+database = app.db
 
 with suppress(ImportError):
-    import playhouse.postgres_ext as pw_pext
+    import playhouse.postgres_ext as pw_pext                         #there were problems with value errors
+                                                                     #so i fixed it like this by directly importing database
+class Task(Model):
+    text = CharField()
+    done = BooleanField()
+    description = pw.TextField(null=True)
 
+    class Meta:
+        database = database
 
 def migrate(migrator: Migrator, database: pw.Database, *, fake=False):
-    """Write your migrations here."""
+    migrator.add_fields(Task, description=pw.TextField(null=True))                  #here you write your migration
     
-
-
 def rollback(migrator: Migrator, database: pw.Database, *, fake=False):
-    """Write your rollback migrations here."""
-    
+    migrator.remove_fields(Task, 'description')             
