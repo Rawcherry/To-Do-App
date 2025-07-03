@@ -4,5 +4,5 @@ from app import db
 router = Router(db)
 
 if __name__ == '__main__':
-    router.apply()
+    router.run()
     print("migration has been applyed")
