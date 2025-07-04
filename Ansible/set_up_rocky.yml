@@ -19,6 +19,7 @@
       git:
         repo: 'https://github.com/Rawcherry/To-Do-App'
         dest: /home/usr/Desktop
+        force: yes 
 
     - name: Make the script executable(Downloading Docker)
       file:
