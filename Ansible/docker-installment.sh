@@ -19,6 +19,6 @@ sudo curl -L "https://github.com/docker/compose/releases/download/$COMPOSE_VERSI
 sudo chmod +x /usr/local/bin/docker-compose
 docker-compose --version
 
-sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+#sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 
 echo "Installation complete!"
