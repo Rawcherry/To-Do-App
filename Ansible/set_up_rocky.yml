@@ -1,0 +1,34 @@
+- name: Installing things 
+  hosts: rocky
+  become: yes          
+  gather_facts: no
+
+  tasks:
+    - name: ping
+      ping:
+
+    - name: Downloading required libraries
+      dnf:
+        name:
+          - git
+          - curl
+          - python3
+        state: present
+
+    - name: Clone repository from Git
+      git:
+        repo: 'https://github.com/Rawcherry/To-Do-App'
+        dest: /home/usr/Desktop
+
+    - name: Make the script executable(Downloading Docker)
+      file:
+        path: /home/usr/Desktop/Ansible/docker-installment.sh
+        mode: 'a+x'
+    
+    - name: Run the Docker installation script
+      shell: /home/usr/Desktop/Ansible/docker-installment.sh
+
+    - name: Run docker compose up in /home/usr/Desktop/
+      shell: docker compose up -d
+      args:
+        chdir: /home/usr/Desktop/
