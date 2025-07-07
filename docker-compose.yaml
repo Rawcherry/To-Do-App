@@ -27,24 +27,12 @@ services:
       COUNTDOWN_TO_WHORES_ARRIVE: 3 hours
     volumes:
       - .:/app
-      
-
-  frontend:
-    build: ./frontend
-    restart: always
-    depends_on:
-      - app
-      - db 
-    ports:
-      - "3000:3000"  
-    environment:
-      REACT_APP_API_URL: http://app:5000/api 
     
   frontend_nginx:
     build:
       context: ./frontend_nginx
     ports:
-      - "3001:80"
+      - "8080:80"
     depends_on:
       - app
 
