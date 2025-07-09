@@ -15,7 +15,7 @@ db = PooledPostgresqlDatabase(
     password=os.environ.get('DB_PASSWORD'),
     host=os.environ.get('DB_HOST'),
     port=int(os.environ.get('DB_PORT', 5432)),
-    max_connections=32,
+    max_connections=3200,
     stale_timeout=300 
 )
 
@@ -47,6 +47,7 @@ class BaseModel(Model):
 
 class Task(BaseModel):
     text = CharField()
+    description = CharField(null=True)
     done = BooleanField(default=False)
 
 
@@ -106,13 +107,23 @@ def get_todos():
                 type: string
               done:
                 type: boolean
+              description:  # Новое свойство для описания
+                type: string
         examples:
           application/json: [
-            {"id": 1, "text": "шакила мне в онила", "done": false},
-            {"id": 2, "text": "булата мне в окуджаву", "done": true}
+            {"id": 1, "text": "шакила мне в онила", "done": false, "description": "Описание задачи 1"},
+            {"id": 2, "text": "булата мне в окуджаву", "done": true, "description": "Описание задачи 2"}
           ]
     """
-    tasks = [{"id": task.id, "text": task.text, "done": task.done} for task in Task.select()]
+    tasks = [
+        {
+            "id": task.id,
+            "text": task.text,
+            "done": task.done,
+            "description": task.description  # добавляем description при выдаче
+        }
+        for task in Task.select()
+    ]
     return json_response(tasks)
 
 @app.route('/api/tasks', methods=['POST'])
@@ -133,7 +144,9 @@ def add_todo():
           properties:
             text:
               type: string
-        description: Тело запроса с текстом задачи
+            description:            # Новое поле для описания
+              type: string
+        description: Тело запроса с текстом задачи и описанием
     responses:
       201:
         description: Задача добавлена
@@ -146,11 +159,14 @@ def add_todo():
               type: string
             done:
               type: boolean
+            description:  # Новое поле
+              type: string
         examples:
           application/json:
             id: 5
             text: Помыть посуду
             done: false
+            description: описание моей задачи
       400:
         description: Ошибка (нет поля text)
         schema:
@@ -165,8 +181,14 @@ def add_todo():
     data = request.json
     if not data or "text" not in data:
         return json_response({"error": "Поле text обязательно"}, status=400)
-    task = Task.create(text=data["text"])
-    return json_response({"id": task.id, "text": task.text, "done": task.done}, status=201)
+    description = data.get("description")  # получаем description если есть
+    task = Task.create(text=data["text"], description=description)
+    return json_response({
+        "id": task.id,
+        "text": task.text,
+        "done": task.done,
+        "description": task.description  # отдаём description
+    }, status=201)
 
 @app.route('/api/tasks/<int:id>', methods=['DELETE'])
 def delete_todo(id):
@@ -223,7 +245,9 @@ def update_task(id):
               type: string
             done:
               type: boolean
-        description: Обновляемые поля задачи
+            description:
+              type: string
+        описание: Поля для обновления
     responses:
       200:
         description: Обновленная задача
@@ -236,11 +260,14 @@ def update_task(id):
               type: string
             done:
               type: boolean
+            description:  # Новое свойство
+              type: string
         examples:
           application/json:
             id: 1
             text: Новое название
             done: true
+            description: Обновленное описание
       400:
         description: Ошибка запроса
         schema:
@@ -250,7 +277,7 @@ def update_task(id):
               type: string
         examples:
           application/json:
-            error: "Нет полей для обновления (text/done)"
+            error: "Нет полей для обновления (text/done/description)"
       404:
         description: Задача не найдена
         schema:
@@ -274,13 +301,18 @@ def update_task(id):
         update_data['text'] = data["text"]
     if "done" in data:
         update_data['done'] = data["done"]
+    if "description" in data:
+        update_data['description'] = data["description"]
     if not update_data:
-        return json_response({"error": "Нет полей для обновления (text/done)"}, status=400)
+        return json_response({"error": "Нет полей для обновления (text/done/description)"}, status=400)
     Task.update(**update_data).where(Task.id == id).execute()
-    # Получаем обновленную задачу
     task = Task.get_by_id(id)
-    return json_response({"id": task.id, "text": task.text, "done": task.done})
-
+    return json_response({
+        "id": task.id,
+        "text": task.text,
+        "done": task.done,
+        "description": task.description
+    })
 @app.route('/api/tasks/<int:id>', methods=['GET'])
 def get_task(id):
     """
